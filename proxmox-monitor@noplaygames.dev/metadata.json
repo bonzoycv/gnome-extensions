@@ -1,0 +1,9 @@
+{
+  "uuid": "proxmox-monitor@noplaygames.dev",
+  "name": "Proxmox VE Monitor",
+  "description": "Monitorea el estado del nodo Proxmox, VMs y contenedores desde el panel superior.",
+  "shell-version": ["45", "46", "47", "48", "49", "50", "51"],
+  "settings-schema": "org.gnome.shell.extensions.proxmox-monitor",
+  "url": "https://github.com/bonzoycv/gnome-extensions",
+  "version": 2
+}

@@ -1,0 +1,11 @@
+# Esquemas compilados (los genera install.sh)
+gschemas.compiled
+
+# Configuración local o secretos: nunca al repositorio
+*.local.*
+.env
+config.json
+
+# Paquetes generados
+*.zip
+*.shell-extension.zip

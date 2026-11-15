@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="proxmox-monitor">
+  <schema id="org.gnome.shell.extensions.proxmox-monitor"
+          path="/org/gnome/shell/extensions/proxmox-monitor/">
+    <key name="pve-host" type="s">
+      <default>''</default>
+      <summary>Dirección del servidor Proxmox</summary>
+      <description>URL base de la API, por ejemplo https://192.168.1.10:8006</description>
+    </key>
+    <key name="pve-node" type="s">
+      <default>'pve'</default>
+      <summary>Nombre del nodo</summary>
+      <description>Nombre del nodo tal como aparece en Proxmox (Datacenter → nodo).</description>
+    </key>
+    <key name="token-id" type="s">
+      <default>''</default>
+      <summary>ID del token de la API</summary>
+      <description>Con el formato usuario@realm!nombre, por ejemplo monitor@pve!gnome</description>
+    </key>
+    <key name="token-secret" type="s">
+      <default>''</default>
+      <summary>Secreto del token de la API</summary>
+      <description>El UUID que Proxmox muestra una sola vez al crear el token.</description>
+    </key>
+    <key name="temps-url" type="s">
+      <default>''</default>
+      <summary>URL del servicio de temperaturas</summary>
+      <description>Opcional. Por ejemplo http://192.168.1.10:9105. Vacío para no mostrar temperaturas.</description>
+    </key>
+    <key name="refresh-seconds" type="i">
+      <range min="3" max="300"/>
+      <default>10</default>
+      <summary>Intervalo de actualización en segundos</summary>
+    </key>
+    <key name="accept-invalid-certs" type="b">
+      <default>true</default>
+      <summary>Aceptar certificados autofirmados</summary>
+      <description>Proxmox usa un certificado autofirmado por defecto.</description>
+    </key>
+  </schema>
+</schemalist>

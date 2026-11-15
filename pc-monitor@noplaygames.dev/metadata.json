@@ -1,0 +1,7 @@
+{
+  "uuid": "pc-monitor@noplaygames.dev",
+  "name": "PC Monitor",
+  "description": "Muestra en el panel superior el estado de este PC: CPU, RAM, GPU, temperaturas, discos y red.",
+  "shell-version": ["45", "46", "47", "48", "49", "50", "51"],
+  "version": 1
+}
