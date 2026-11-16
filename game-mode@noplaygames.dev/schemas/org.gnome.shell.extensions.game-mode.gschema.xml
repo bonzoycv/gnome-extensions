@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="game-mode">
+  <schema id="org.gnome.shell.extensions.game-mode"
+          path="/org/gnome/shell/extensions/game-mode/">
+    <key name="game-profile" type="s">
+      <default>'latency-performance'</default>
+      <summary>Perfil de TuneD para jugar</summary>
+    </key>
+    <key name="normal-profile" type="s">
+      <default>'desktop'</default>
+      <summary>Perfil de TuneD al salir del modo juego</summary>
+      <description>Se actualiza solo con el perfil que estaba activo al encender el modo juego.</description>
+    </key>
+    <key name="auto-with-gamemode" type="b">
+      <default>true</default>
+      <summary>Activar automáticamente con GameMode</summary>
+      <description>Enciende el modo juego cuando un juego activa Feral GameMode y lo apaga al cerrarlo.</description>
+    </key>
+  </schema>
+</schemalist>

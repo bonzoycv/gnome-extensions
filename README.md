@@ -1,11 +1,14 @@
 # Extensiones de GNOME Shell
 
-Dos extensiones para el panel superior de GNOME Shell (45 a 51), con el mismo estilo:
+Extensiones para GNOME Shell (45 a 51), con el mismo estilo:
 
-| Extensión | Qué muestra |
-|-----------|-------------|
-| [Proxmox VE Monitor](proxmox-monitor@noplaygames.dev/) | El estado de un servidor Proxmox VE: CPU, RAM, almacenamiento, VMs, contenedores LXC y temperaturas. |
+| Extensión | Qué hace |
+|-----------|----------|
 | [PC Monitor](pc-monitor@noplaygames.dev/) | El estado de este PC: CPU, RAM, swap, GPU AMD, temperaturas, discos y red. |
+| [Proxmox VE Monitor](proxmox-monitor@noplaygames.dev/) | El estado de un servidor Proxmox VE: CPU, RAM, almacenamiento, VMs, contenedores LXC y temperaturas. |
+| [Homelab Status](homelab-status@noplaygames.dev/) | El resultado de un script de chequeo que corre por SSH en el servidor (contenedores, backups, sitios), con notificaciones. |
+| [Pi-hole Monitor](pihole-monitor@noplaygames.dev/) | Estadísticas de Pi-hole v6 y botones para pausar o reanudar el bloqueo. |
+| [Modo juego](game-mode@noplaygames.dev/) | Interruptor en los ajustes rápidos que cambia el perfil de TuneD, con activación automática por Feral GameMode. |
 
 ## Instalación
 

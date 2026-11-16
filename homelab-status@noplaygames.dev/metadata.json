@@ -1,0 +1,9 @@
+{
+  "uuid": "homelab-status@noplaygames.dev",
+  "name": "Homelab Status",
+  "description": "Muestra en el panel superior el estado del homelab (contenedores, disco, backups y sitios) a partir de un script de chequeo que corre por SSH.",
+  "shell-version": ["45", "46", "47", "48", "49", "50", "51"],
+  "settings-schema": "org.gnome.shell.extensions.homelab-status",
+  "url": "https://github.com/bonzoycv/gnome-extensions",
+  "version": 1
+}

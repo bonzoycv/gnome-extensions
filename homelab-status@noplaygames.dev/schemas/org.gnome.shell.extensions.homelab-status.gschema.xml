@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="homelab-status">
+  <schema id="org.gnome.shell.extensions.homelab-status"
+          path="/org/gnome/shell/extensions/homelab-status/">
+    <key name="ssh-host" type="s">
+      <default>''</default>
+      <summary>Host SSH</summary>
+      <description>Un alias de ~/.ssh/config o usuario@servidor. Debe entrar sin pedir contraseña (llave SSH).</description>
+    </key>
+    <key name="remote-command" type="s">
+      <default>''</default>
+      <summary>Comando remoto</summary>
+      <description>Script que imprime líneas que empiezan con OK, AVISO o FALLA.</description>
+    </key>
+    <key name="refresh-minutes" type="i">
+      <range min="1" max="120"/>
+      <default>5</default>
+      <summary>Intervalo de actualización en minutos</summary>
+    </key>
+    <key name="notify" type="b">
+      <default>true</default>
+      <summary>Notificar problemas nuevos</summary>
+    </key>
+    <key name="notify-on-start" type="b">
+      <default>false</default>
+      <summary>Notificar también los problemas que ya existían al iniciar sesión</summary>
+    </key>
+    <key name="dashboard-url" type="s">
+      <default>''</default>
+      <summary>URL de un panel web</summary>
+      <description>Opcional (Uptime Kuma, Homepage…). Se abre desde el menú.</description>
+    </key>
+  </schema>
+</schemalist>

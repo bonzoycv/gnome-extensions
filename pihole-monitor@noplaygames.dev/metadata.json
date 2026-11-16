@@ -1,0 +1,9 @@
+{
+  "uuid": "pihole-monitor@noplaygames.dev",
+  "name": "Pi-hole Monitor",
+  "description": "Muestra en el panel superior las estadísticas de Pi-hole v6 y permite pausar o reanudar el bloqueo.",
+  "shell-version": ["45", "46", "47", "48", "49", "50", "51"],
+  "settings-schema": "org.gnome.shell.extensions.pihole-monitor",
+  "url": "https://github.com/bonzoycv/gnome-extensions",
+  "version": 1
+}

@@ -1,0 +1,9 @@
+{
+  "uuid": "game-mode@noplaygames.dev",
+  "name": "Modo juego",
+  "description": "Interruptor en los ajustes rápidos que cambia el perfil de TuneD a uno de rendimiento, con activación automática cuando un juego usa Feral GameMode.",
+  "shell-version": ["45", "46", "47", "48", "49", "50", "51"],
+  "settings-schema": "org.gnome.shell.extensions.game-mode",
+  "url": "https://github.com/bonzoycv/gnome-extensions",
+  "version": 1
+}

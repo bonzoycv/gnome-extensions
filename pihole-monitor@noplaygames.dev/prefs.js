@@ -1,0 +1,46 @@
+// Ventana de preferencias de Pi-hole Monitor.
+import Adw from 'gi://Adw';
+import Gio from 'gi://Gio';
+import Gtk from 'gi://Gtk';
+
+import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
+
+export default class PiholeMonitorPreferences extends ExtensionPreferences {
+    fillPreferencesWindow(window) {
+        const settings = this.getSettings();
+        window._settings = settings;
+
+        const page = new Adw.PreferencesPage({title: 'General', icon_name: 'security-high-symbolic'});
+        window.add(page);
+
+        const server = new Adw.PreferencesGroup({
+            title: 'Pi-hole',
+            description: 'Para Pi-hole v6. La contraseña de aplicación se crea en Settings → Web interface / API → Configure app password.',
+        });
+        page.add(server);
+
+        const url = new Adw.EntryRow({title: 'Dirección (p. ej. http://192.168.1.2:8080)'});
+        settings.bind('url', url, 'text', Gio.SettingsBindFlags.DEFAULT);
+        server.add(url);
+
+        const password = new Adw.PasswordEntryRow({title: 'Contraseña de aplicación'});
+        settings.bind('app-password', password, 'text', Gio.SettingsBindFlags.DEFAULT);
+        server.add(password);
+
+        const certs = new Adw.SwitchRow({
+            title: 'Aceptar certificados autofirmados',
+            subtitle: 'Solo importa si la dirección usa https.',
+        });
+        settings.bind('accept-invalid-certs', certs, 'active', Gio.SettingsBindFlags.DEFAULT);
+        server.add(certs);
+
+        const other = new Adw.PreferencesGroup({title: 'Otros'});
+        page.add(other);
+        const refresh = new Adw.SpinRow({
+            title: 'Actualizar cada (segundos)',
+            adjustment: new Gtk.Adjustment({lower: 5, upper: 600, step_increment: 5, page_increment: 30}),
+        });
+        settings.bind('refresh-seconds', refresh, 'value', Gio.SettingsBindFlags.DEFAULT);
+        other.add(refresh);
+    }
+}
