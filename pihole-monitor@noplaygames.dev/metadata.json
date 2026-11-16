@@ -5,5 +5,5 @@
   "shell-version": ["45", "46", "47", "48", "49", "50", "51"],
   "settings-schema": "org.gnome.shell.extensions.pihole-monitor",
   "url": "https://github.com/bonzoycv/gnome-extensions",
-  "version": 1
+  "version": 2
 }

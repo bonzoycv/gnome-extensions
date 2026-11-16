@@ -7,6 +7,7 @@ Extensión de GNOME Shell que muestra las estadísticas de **Pi-hole v6** en el 
   - Estado del bloqueo, consultas de hoy, bloqueadas, desde caché y reenviadas, clientes activos y dominios en las listas.
   - **Pausar bloqueo** 5 minutos, 30 minutos o hasta reanudarlo, y **Reanudar bloqueo**.
   - **Abrir panel de Pi-hole** y **Preferencias**.
+- **Pi-hole de respaldo (opcional):** si tienes un segundo Pi-hole como DNS secundario, el menú muestra su estado, sus consultas, sus dominios y cuándo se actualizaron sus listas. Si deja de responder, el panel agrega `⚠️` (`🛡️ 14% ⚠️`). Con su contraseña de aplicación, **Pausar** y **Reanudar** actúan sobre los dos a la vez; sin contraseña, solo se comprueba si responde.
 
 Se actualiza cada 30 segundos (configurable). Solo funciona con Pi-hole v6 o superior, porque usa la API `/api`. Las versiones 5 y anteriores tenían otra API.
 
@@ -30,7 +31,11 @@ Cierra sesión y vuelve a entrar (en Wayland), y actívala con la app **Extensio
 | Dirección | `http://192.168.1.2:8080` (sin `/admin`) |
 | Contraseña de aplicación | La del paso 1 |
 | Aceptar certificados autofirmados | Solo importa si usas `https` |
+| Respaldo: dirección | `http://192.168.1.3:8080` (opcional) |
+| Respaldo: contraseña de aplicación | La del Pi-hole de respaldo (opcional) |
 | Actualizar cada | `30` segundos |
+
+Si sincronizas los dos Pi-hole (por ejemplo con [nebula-sync](https://github.com/lovelaze/nebula-sync)), cambia las listas siempre en el principal. La contraseña de aplicación de cada uno es independiente y no se sincroniza.
 
 Los cambios se aplican al momento, sin cerrar sesión.
 

@@ -34,6 +34,20 @@ export default class PiholeMonitorPreferences extends ExtensionPreferences {
         settings.bind('accept-invalid-certs', certs, 'active', Gio.SettingsBindFlags.DEFAULT);
         server.add(certs);
 
+        const replica = new Adw.PreferencesGroup({
+            title: 'Pi-hole de respaldo (opcional)',
+            description: 'Si tienes un segundo Pi-hole como DNS secundario. Con su contraseña de aplicación, el menú muestra su estado y «Pausar bloqueo» pausa los dos a la vez. Sin contraseña, solo se comprueba si responde.',
+        });
+        page.add(replica);
+
+        const replicaUrl = new Adw.EntryRow({title: 'Dirección (p. ej. http://192.168.1.3:8080)'});
+        settings.bind('replica-url', replicaUrl, 'text', Gio.SettingsBindFlags.DEFAULT);
+        replica.add(replicaUrl);
+
+        const replicaPassword = new Adw.PasswordEntryRow({title: 'Contraseña de aplicación'});
+        settings.bind('replica-app-password', replicaPassword, 'text', Gio.SettingsBindFlags.DEFAULT);
+        replica.add(replicaPassword);
+
         const other = new Adw.PreferencesGroup({title: 'Otros'});
         page.add(other);
         const refresh = new Adw.SpinRow({
