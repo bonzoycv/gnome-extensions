@@ -22,6 +22,12 @@
       <summary>Contraseña de aplicación del respaldo</summary>
       <description>Opcional. Sin ella solo se comprueba si responde y no se puede pausar su bloqueo.</description>
     </key>
+    <key name="failures-before-alert" type="i">
+      <range min="1" max="20"/>
+      <default>3</default>
+      <summary>Fallas seguidas antes de marcar un Pi-hole en rojo</summary>
+      <description>Mientras no se llegue a este número, se muestran los últimos datos buenos con un aviso en amarillo. Con 1, cualquier falla se marca en rojo al momento.</description>
+    </key>
     <key name="refresh-seconds" type="i">
       <range min="5" max="600"/>
       <default>30</default>

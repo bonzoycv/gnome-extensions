@@ -34,6 +34,9 @@ Cierra sesión y vuelve a entrar (en Wayland), y actívala con la app **Extensio
 | Respaldo: dirección | `http://192.168.1.3:8080` (opcional) |
 | Respaldo: contraseña de aplicación | La del Pi-hole de respaldo (opcional) |
 | Actualizar cada | `30` segundos |
+| Fallas seguidas antes de marcar en rojo | `3` |
+
+**Caídas breves:** si un Pi-hole no responde una vez (por ejemplo, porque se reinició el contenedor), no se marca en rojo enseguida. El menú sigue mostrando sus últimos datos con un aviso en amarillo, como `🟡 Sin respuesta hace 30 s (falla 1 de 3)`, y el panel agrega `⚠️`. Solo pasa a `🔴 No responde` cuando falla las veces seguidas que indiques en las preferencias. Con `1`, cualquier falla se marca en rojo al momento.
 
 Si sincronizas los dos Pi-hole (por ejemplo con [nebula-sync](https://github.com/lovelaze/nebula-sync)), cambia las listas siempre en el principal. La contraseña de aplicación de cada uno es independiente y no se sincroniza.
 

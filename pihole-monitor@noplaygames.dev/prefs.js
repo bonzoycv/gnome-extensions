@@ -56,5 +56,13 @@ export default class PiholeMonitorPreferences extends ExtensionPreferences {
         });
         settings.bind('refresh-seconds', refresh, 'value', Gio.SettingsBindFlags.DEFAULT);
         other.add(refresh);
+
+        const failures = new Adw.SpinRow({
+            title: 'Fallas seguidas antes de marcar en rojo',
+            subtitle: 'Antes se muestran los últimos datos con un aviso en amarillo. Con 1, se marca en rojo a la primera falla.',
+            adjustment: new Gtk.Adjustment({lower: 1, upper: 20, step_increment: 1, page_increment: 5}),
+        });
+        settings.bind('failures-before-alert', failures, 'value', Gio.SettingsBindFlags.DEFAULT);
+        other.add(failures);
     }
 }

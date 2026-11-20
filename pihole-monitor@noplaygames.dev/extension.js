@@ -204,13 +204,19 @@ class PiholeIndicator extends PanelMenu.Button {
 
         this._primaryState = null;
         this._replicaState = null;
+        this._trackers = {};
         this._syncActions(null);
 
         this._settingsId = this._settings.connect('changed', (s, key) => {
-            if (key === 'url' || key === 'app-password')
+            // Con otra dirección o contraseña, los datos y las fallas anteriores ya no valen.
+            if (key === 'url' || key === 'app-password') {
                 this._primary.logout();
-            if (key === 'replica-url' || key === 'replica-app-password')
+                delete this._trackers.primary;
+            }
+            if (key === 'replica-url' || key === 'replica-app-password') {
                 this._replica.logout();
+                delete this._trackers.replica;
+            }
             if (this._debounceId)
                 GLib.source_remove(this._debounceId);
             this._debounceId = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 1, () => {
@@ -277,33 +283,59 @@ class PiholeIndicator extends PanelMenu.Button {
         if (!this._session)
             return; // el indicador se destruyó mientras se esperaba
 
-        this._primaryState = primary;
-        this._replicaState = replica;
+        this._primaryState = this._track('primary', primary);
+        this._replicaState = this._track('replica', replica);
         this._show();
+    }
+
+    // Una caída breve (p. ej. un reinicio del contenedor) no se marca en rojo: mientras las fallas
+    // seguidas no lleguen a «failures-before-alert», se muestra el último estado bueno con un aviso.
+    _track(key, state) {
+        if (!state) {
+            delete this._trackers[key];
+            return null;
+        }
+        const now = GLib.get_monotonic_time() / 1e6;
+        const t = this._trackers[key] ??= {lastGood: null, goodAt: 0, fails: 0};
+        if (state.ok) {
+            Object.assign(t, {lastGood: state, goodAt: now, fails: 0});
+            return state;
+        }
+        t.fails++;
+        const limit = this._settings.get_int('failures-before-alert');
+        if (t.lastGood && t.fails < limit) {
+            console.warn(`[PiholeMonitor] ${key}: falla ${t.fails} de ${limit}: ${state.error}`);
+            return {...t.lastGood, stale: {seconds: Math.round(now - t.goodAt), fails: t.fails, limit, error: state.error}};
+        }
+        console.error(`[PiholeMonitor] ${key}: ${state.error}`);
+        return state;
     }
 
     _show() {
         const primary = this._primaryState;
         const replica = this._replicaState;
         const item = (section, text) => section.addMenuItem(new PopupMenu.PopupMenuItem(text, {reactive: false}));
-        const replicaWarn = replica && !replica.ok ? ' ⚠️' : '';
+        const staleText = s => `🟡 Sin respuesta hace ${s.seconds} s (falla ${s.fails} de ${s.limit}); últimos datos:`;
+        const replicaWarn = replica && (!replica.ok || replica.stale) ? ' ⚠️' : '';
+        const panelWarn = primary.stale && !replicaWarn ? ' ⚠️' : replicaWarn;
 
         this._statsSection.removeAll();
         if (!primary.ok) {
             this._panelLabel.set_text(`🛡️ ✕${replicaWarn}`);
-            item(this._statsSection, `No se pudo consultar: ${primary.error}`);
-            console.error(`[PiholeMonitor] principal: ${primary.error}`);
+            item(this._statsSection, `🔴 No responde: ${primary.error}`);
             this._syncActions(null);
         } else {
+            if (primary.stale)
+                item(this._statsSection, staleText(primary.stale));
             const {summary, blocking} = primary;
             const q = summary.queries ?? {};
             const enabled = blocking.blocking === 'enabled';
             const pct = Number(q.percent_blocked ?? 0);
 
             if (enabled)
-                this._panelLabel.set_text(`🛡️ ${pct.toFixed(0)}%${replicaWarn}`);
+                this._panelLabel.set_text(`🛡️ ${pct.toFixed(0)}%${panelWarn}`);
             else
-                this._panelLabel.set_text(`${blocking.timer ? `⏸️ ${fmtTimer(blocking.timer)}` : '⏸️ Pi-hole'}${replicaWarn}`);
+                this._panelLabel.set_text(`${blocking.timer ? `⏸️ ${fmtTimer(blocking.timer)}` : '⏸️ Pi-hole'}${panelWarn}`);
 
             if (enabled)
                 item(this._statsSection, '🟢 Bloqueo activo');
@@ -323,9 +355,10 @@ class PiholeIndicator extends PanelMenu.Button {
         if (!replica)
             return;
         this._replicaSection.addMenuItem(new PopupMenu.PopupSeparatorMenuItem('Respaldo'));
+        if (replica.stale)
+            item(this._replicaSection, staleText(replica.stale));
         if (!replica.ok) {
             item(this._replicaSection, `🔴 No responde: ${replica.error}`);
-            console.error(`[PiholeMonitor] respaldo: ${replica.error}`);
         } else if (replica.pingOnly) {
             item(this._replicaSection, '🟢 Responde (sin contraseña: no se ven sus datos)');
         } else {
